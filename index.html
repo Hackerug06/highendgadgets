@@ -4,185 +4,144 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Laptop Store</title>
-    <link rel="icon" href="/api/placeholder/32/32" type="image/png">
+    <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA
+    AAAFCAYAAAB4nRa0AAAAHElEQVR42mP8//8/w38GIAXDqxIS04qCDkjGAcTZAE
+    pbwKxhgAAAABJRU5ErkJggg==" type="image/png"> <!-- Example Icon -->
     <style>
-        * {
+        body {
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-        }
-        .navbar {
-            background-color: #333;
+        header {
+            background: 333;
             color: white;
-            padding: 1rem;
+            padding: 15px 0;
             text-align: center;
+            position: relative;
         }
-        .navbar-title {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        .navbar-title img {
-            margin-right: 10px;
-        }
-        .navbar-links {
+        nav {
             display: flex;
             justify-content: center;
             gap: 20px;
         }
-        .navbar-links a {
+        nav a {
             color: white;
             text-decoration: none;
+            padding: 10px;
+            transition: background 0.3s;
         }
-        .section {
-            display: none;
+        nav a:hover {
+            background: 555;
+        }
+        .container {
             padding: 20px;
         }
-        .active {
-            display: block;
-        }
-        .products-grid {
-            display: grid;
-            gap: 20px;
-        }
-        @media (max-width: 600px) {
-            .products-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        @media (min-width: 601px) and (max-width: 1024px) {
-            .products-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-        @media (min-width: 1025px) {
-            .products-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
         }
         .product-card {
-            border: 1px solid #ddd;
-            padding: 15px;
+            border: 1px solid ccc;
+            border-radius: 10px;
+            padding: 10px;
             text-align: center;
+            width: calc(50% - 20px); / Mobile /
         }
-        .product-card img {
+        img {
             max-width: 100%;
-            height: auto;
+            border-radius: 10px;
         }
-        .cart-btn {
-            background-color: #4CAF50;
+        @media (min-width: 600px) {
+            .product-card {
+                width: calc(33.33% - 20px); / Tablets /
+            }
+        }
+        @media (min-width: 900px) {
+            .product-card {
+                width: calc(25% - 20px); / Laptops /
+            }
+        }
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            background: 333;
             color: white;
-            border: none;
-            padding: 10px 15px;
-            margin-top: 10px;
-            cursor: pointer;
-        }
-        .navbar-links a:hover {
-            color: #ddd;
+            position: relative;
+            bottom: 0;
+            width: 100%;
         }
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="navbar-title">
-            <img src="/api/placeholder/50/50" alt="Logo">
-            <h1>Laptop Store</h1>
-        </div>
-        <div class="navbar-links">
-            <a href="#" onclick="showSection('home')">Home</a>
-            <a href="#" onclick="showSection('products')">Products</a>
-            <a href="#" onclick="showSection('contact')">Contact</a>
-        </div>
+
+<header>
+    <h1><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA
+    AAAFCAYAAAB4nRa0AAAAHElEQVR42mP8//8/w38GIAXDqxIS04qCDkjGAcTZAE
+    pbwKxhgAAAABJRU5ErkJggg==" alt="Laptop Icon" style="width: 24px; vertical-align: middle;"> Laptop Store</h1>
+    <nav>
+        <a href="home">Home</a>
+        <a href="products">Products</a>
+        <a href="contact">Contact</a>
     </nav>
+</header>
 
-    <section id="home" class="section active">
-        <h2>Welcome to Laptop Store</h2>
-        <p>Find the perfect laptop for your needs!</p>
-    </section>
+<div class="container" id="home">
+    <h2>Welcome to Our Laptop Store</h2>
+    <p>Your one-stop shop for the latest and greatest laptops!</p>
+</div>
 
-    <section id="products" class="section">
-        <h2>Our Laptops</h2>
-        <div class="products-grid" id="product-container"></div>
-    </section>
+<div class="container" id="products">
+    <h2>Our Products</h2>
+    <div class="products">
+        <div class="product-card">
+            <img src="https://via.placeholder.com/150" alt="Laptop 1">
+            <h3>Laptop 1</h3>
+            <p>Price: 500</p>
+            <button onclick="addToCart('Laptop 1', 500)">Add to Cart</button>
+        </div>
+        <div class="product-card">
+            <img src="https://via.placeholder.com/150" alt="Laptop 2">
+            <h3>Laptop 2</h3>
+            <p>Price: 600</p>
+            <button onclick="addToCart('Laptop 2', 600)">Add to Cart</button>
+        </div>
+        <div class="product-card">
+            <img src="https://via.placeholder.com/150" alt="Laptop 3">
+            <h3>Laptop 3</h3>
+            <p>Price: 700</p>
+            <button onclick="addToCart('Laptop 3', 700)">Add to Cart</button>
+        </div>
+        <div class="product-card">
+            <img src="https://via.placeholder.com/150" alt="Laptop 4">
+            <h3>Laptop 4</h3>
+            <p>Price: 800</p>
+            <button onclick="addToCart('Laptop 4', 800)">Add to Cart</button>
+        </div>
+        <!-- Add more products as needed -->
+    </div>
+</div>
 
-    <section id="contact" class="section">
-        <h2>Contact Us</h2>
-        <p>Email: support@laptopstore.com</p>
-        <p>Phone: +256 753 979 539</p>
-    </section>
+<div class="container" id="contact">
+    <h2>Contact Us</h2>
+    <p>If you have any questions, feel free to reach out via WhatsApp.</p>
+    <p>WhatsApp: <a href="https://wa.me/+256753979539" target="_blank">+256753979539</a></p>
+</div>
 
-    <script>
-        // Navigation function
-        function showSection(sectionId) {
-            const sections = document.querySelectorAll('.section');
-            sections.forEach(section => section.classList.remove('active'));
-            document.getElementById(sectionId).classList.add('active');
-        }
+<footer>
+    <p>© 2023 Laptop Store. All rights reserved.</p>
+</footer>
 
-        // Product data
-        const products = [
-            {
-                id: 1,
-                name: 'Gaming Laptop Pro',
-                price: 1299.99,
-                description: 'High-performance gaming laptop with latest GPU',
-                image: '/api/placeholder/300/200'
-            },
-            {
-                id: 2,
-                name: 'Business Ultrabook',
-                price: 899.99,
-                description: 'Lightweight laptop for professionals',
-                image: '/api/placeholder/300/200'
-            },
-            {
-                id: 3,
-                name: 'Creative Workstation',
-                price: 1599.99,
-                description: 'Powerful laptop for video editing and design',
-                image: '/api/placeholder/300/200'
-            },
-            {
-                id: 4,
-                name: 'Budget Laptop',
-                price: 499.99,
-                description: 'Affordable laptop for everyday tasks',
-                image: '/api/placeholder/300/200'
-            }
-        ];
+<script>
+    function addToCart(name, price) {
+        const message = encodeURIComponent(`I want to purchase {name} for {price}.`);
+        const whatsappUrl = `https://wa.me/256753979539?text={message}`;
+        window.open(whatsappUrl, '_blank');
+    }
+</script>
 
-        // Render products
-        function renderProducts() {
-            const container = document.getElementById('product-container');
-            products.forEach(product => {
-                const productCard = document.createElement('div');
-                productCard.className = 'product-card';
-                productCard.innerHTML = `
-                    <img src="${product.image}" alt="${product.name}">
-                    <h3>${product.name}</h3>
-                    <p>${product.description}</p>
-                    <p>$${product.price}</p>
-                    <button class="cart-btn" onclick="addToCart(${product.id})">Add to Cart</button>
-                `;
-                container.appendChild(productCard);
-            });
-        }
-
-        // Add to cart function
-        function addToCart(productId) {
-            const product = products.find(p => p.id === productId);
-            const whatsappMessage = `Hi, I want to purchase: ${product.name} - $${product.price}. More details: ${product.description}`;
-            const whatsappUrl = `https://wa.me/256753979539?text=${encodeURIComponent(whatsappMessage)}`;
-            window.open(whatsappUrl, '_blank');
-        }
-
-        // Initialize products on page load
-        renderProducts();
-    </script>
 </body>
 </html>
