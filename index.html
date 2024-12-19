@@ -3,145 +3,391 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laptop Store</title>
-    <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA
-    AAAFCAYAAAB4nRa0AAAAHElEQVR42mP8//8/w38GIAXDqxIS04qCDkjGAcTZAE
-    pbwKxhgAAAABJRU5ErkJggg==" type="image/png"> <!-- Example Icon -->
+    <title>TechHub Laptops</title>
+    <link rel="icon" type="image/x-icon" href="/api/placeholder/32/32">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: Arial, sans-serif;
         }
-        header {
-            background: 333;
-            color: white;
-            padding: 15px 0;
-            text-align: center;
-            position: relative;
+
+        /* Standard Navigation */
+        .navbar {
+            background-color: #333;
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
         }
-        nav {
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
-            justify-content: center;
-            gap: 20px;
+            justify-content: space-between;
+            align-items: center;
         }
-        nav a {
+
+        .brand {
+            color: white;
+            font-size: 1.5rem;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-menu li {
+            margin-left: 2rem;
+        }
+
+        .nav-menu a {
             color: white;
             text-decoration: none;
-            padding: 10px;
-            transition: background 0.3s;
+            font-size: 1rem;
+            transition: color 0.3s ease;
         }
-        nav a:hover {
-            background: 555;
+
+        .nav-menu a:hover {
+            color: #2ecc71;
         }
-        .container {
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        /* Main Content */
+        .main {
+            margin-top: 80px;
             padding: 20px;
         }
-        .products {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
         }
+
         .product-card {
-            border: 1px solid ccc;
-            border-radius: 10px;
-            padding: 10px;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 8px;
             text-align: center;
-            width: calc(50% - 20px); / Mobile /
         }
-        img {
+
+        .product-card img {
             max-width: 100%;
-            border-radius: 10px;
+            height: auto;
+            margin-bottom: 15px;
         }
-        @media (min-width: 600px) {
-            .product-card {
-                width: calc(33.33% - 20px); / Tablets /
-            }
+
+        .product-card h3 {
+            margin: 10px 0;
         }
-        @media (min-width: 900px) {
-            .product-card {
-                width: calc(25% - 20px); / Laptops /
-            }
+
+        .product-card .price {
+            color: #2ecc71;
+            font-size: 1.2em;
+            margin: 10px 0;
         }
-        footer {
-            text-align: center;
-            padding: 20px 0;
-            background: 333;
+
+        .add-to-cart {
+            background-color: #2ecc71;
             color: white;
-            position: relative;
-            bottom: 0;
-            width: 100%;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .add-to-cart:hover {
+            background-color: #27ae60;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .pagination button {
+            margin: 0 5px;
+            padding: 8px 16px;
+            cursor: pointer;
+        }
+
+        /* WhatsApp Float Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #25d366;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+
+        /* Cart */
+        .cart {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        /* About and Contact Sections */
+        #about, #contact {
+            padding: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+                width: 100%;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                background-color: #333;
+                padding: 1rem;
+                flex-direction: column;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .nav-menu li {
+                margin: 1rem 0;
+            }
+
+            .nav-container {
+                flex-wrap: wrap;
+            }
         }
     </style>
 </head>
 <body>
-
-<header>
-    <h1><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA
-    AAAFCAYAAAB4nRa0AAAAHElEQVR42mP8//8/w38GIAXDqxIS04qCDkjGAcTZAE
-    pbwKxhgAAAABJRU5ErkJggg==" alt="Laptop Icon" style="width: 24px; vertical-align: middle;"> Laptop Store</h1>
-    <nav>
-        <a href="home">Home</a>
-        <a href="products">Products</a>
-        <a href="contact">Contact</a>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="brand">TechHub</a>
+            <button class="hamburger" onclick="toggleMenu()">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#" onclick="showSection('products')">Products</a></li>
+                <li><a href="#" onclick="showSection('about')">About Us</a></li>
+                <li><a href="#" onclick="showSection('contact')">Contact</a></li>
+            </ul>
+        </div>
     </nav>
-</header>
 
-<div class="container" id="home">
-    <h2>Welcome to Our Laptop Store</h2>
-    <p>Your one-stop shop for the latest and greatest laptops!</p>
-</div>
+    <div class="main">
+        <div id="products" class="section">
+            <div class="products-grid" id="productsGrid"></div>
+            <div class="pagination" id="pagination"></div>
+        </div>
 
-<div class="container" id="products">
-    <h2>Our Products</h2>
-    <div class="products">
-        <div class="product-card">
-            <img src="https://via.placeholder.com/150" alt="Laptop 1">
-            <h3>Laptop 1</h3>
-            <p>Price: 500</p>
-            <button onclick="addToCart('Laptop 1', 500)">Add to Cart</button>
+        <div id="about" class="section" style="display: none;">
+            <h2>About Us</h2>
+            <p>Welcome to Highend Gadgets! We are dedicated to providing high-quality laptops at competitive prices. Our team of experts is here to help you find the perfect laptop for your needs.</p>
         </div>
-        <div class="product-card">
-            <img src="https://via.placeholder.com/150" alt="Laptop 2">
-            <h3>Laptop 2</h3>
-            <p>Price: 600</p>
-            <button onclick="addToCart('Laptop 2', 600)">Add to Cart</button>
+
+        <div id="contact" class="section" style="display: none;">
+            <h2>Contact Us</h2>
+            <p>Phone: +256753979539</p>
+            <p>Email: highendgadgets@gmail.com</p>
+            <p>Address: Your Business Address</p>
         </div>
-        <div class="product-card">
-            <img src="https://via.placeholder.com/150" alt="Laptop 3">
-            <h3>Laptop 3</h3>
-            <p>Price: 700</p>
-            <button onclick="addToCart('Laptop 3', 700)">Add to Cart</button>
-        </div>
-        <div class="product-card">
-            <img src="https://via.placeholder.com/150" alt="Laptop 4">
-            <h3>Laptop 4</h3>
-            <p>Price: 800</p>
-            <button onclick="addToCart('Laptop 4', 800)">Add to Cart</button>
-        </div>
-        <!-- Add more products as needed -->
     </div>
-</div>
 
-<div class="container" id="contact">
-    <h2>Contact Us</h2>
-    <p>If you have any questions, feel free to reach out via WhatsApp.</p>
-    <p>WhatsApp: <a href="https://wa.me/+256753979539" target="_blank">+256753979539</a></p>
-</div>
+    <div class="cart" id="cart">
+        <h3>Shopping Cart</h3>
+        <div id="cartItems"></div>
+        <button onclick="checkout()" class="add-to-cart">Checkout</button>
+    </div>
 
-<footer>
-    <p>© 2023 Laptop Store. All rights reserved.</p>
-</footer>
+    <a href="https://wa.me/256753979539" class="whatsapp-float">
+        Chat with us
+    </a>
 
-<script>
-    function addToCart(name, price) {
-        const message = encodeURIComponent(`I want to purchase {name} for {price}.`);
-        const whatsappUrl = `https://wa.me/256753979539?text={message}`;
-        window.open(whatsappUrl, '_blank');
-    }
-</script>
+    <script>
+        // Sample product data
+        const products = [
+            {
+                id: 1,
+                name: "MacBook Pro",
+                price: 1299,
+                image: "/api/placeholder/300/200",
+                description: "13-inch, M1 chip, 8GB RAM, 256GB SSD"
+            },
+            {
+                id: 2,
+                name: "Dell XPS 13",
+                price: 999,
+                image: "/api/placeholder/300/200",
+                description: "Intel i7, 16GB RAM, 512GB SSD"
+            },
+            {
+                id: 3,
+                name: "HP Spectre x360",
+                price: 1199,
+                image: "/api/placeholder/300/200",
+                description: "2-in-1 Laptop, Intel i5, 8GB RAM, 256GB SSD"
+            },
+            {
+                id: 4,
+                name: "Lenovo ThinkPad X1",
+                price: 1499,
+                image: "/api/placeholder/300/200",
+                description: "Carbon Gen 9, Intel i7, 16GB RAM, 1TB SSD"
+            },
+            {
+                id: 5,
+                name: "ASUS ROG Zephyrus",
+                price: 1799,
+                image: "/api/placeholder/300/200",
+                description: "Gaming Laptop, RTX 3080, 32GB RAM"
+            }
+        ];
 
+        const itemsPerPage = 3;
+        let currentPage = 1;
+        let cart = [];
+
+        // Initialize the website
+        window.onload = function() {
+            showProducts();
+            updatePagination();
+            updateCart();
+        };
+
+        // Toggle menu for mobile
+        function toggleMenu() {
+            document.getElementById('navMenu').classList.toggle('active');
+        }
+
+        // Show different sections
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.style.display = 'none';
+            });
+            document.getElementById(sectionId).style.display = 'block';
+            document.getElementById('navMenu').classList.remove('active');
+        }
+
+        // Display products
+        function showProducts() {
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const currentProducts = products.slice(startIndex, endIndex);
+
+            const productsGrid = document.getElementById('productsGrid');
+            productsGrid.innerHTML = '';
+
+            currentProducts.forEach(product => {
+                const productCard = `
+                    <div class="product-card">
+                        <img src="${product.image}" alt="${product.name}">
+                        <h3>${product.name}</h3>
+                        <p>${product.description}</p>
+                        <p class="price">$${product.price}</p>
+                        <button onclick="addToCart(${product.id})" class="add-to-cart">Add to Cart</button>
+                    </div>
+                `;
+                productsGrid.innerHTML += productCard;
+            });
+        }
+
+        // Update pagination
+        function updatePagination() {
+            const totalPages = Math.ceil(products.length / itemsPerPage);
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = '';
+
+            for (let i = 1; i <= totalPages; i++) {
+                const button = document.createElement('button');
+                button.innerText = i;
+                button.onclick = () => {
+                    currentPage = i;
+                    showProducts();
+                };
+                if (i === currentPage) {
+                    button.style.backgroundColor = '#2ecc71';
+                    button.style.color = 'white';
+                }
+                pagination.appendChild(button);
+            }
+        }
+
+        // Add to cart function
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            cart.push(product);
+            updateCart();
+        }
+
+        // Update cart display
+        function updateCart() {
+            const cartItems = document.getElementById('cartItems');
+            cartItems.innerHTML = '';
+            
+            cart.forEach(item => {
+                cartItems.innerHTML += `
+                    <div style="margin: 10px 0;">
+                        <p>${item.name} - $${item.price}</p>
+                    </div>
+                `;
+            });
+        }
+
+        // Checkout function
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+
+            let message = 'I would like to purchase:\n';
+            let total = 0;
+
+            cart.forEach(item => {
+                message += `${item.name} - $${item.price}\n`;
+                total += item.price;
+            });
+
+            message += `\nTotal: $${total}`;
+
+            // Encode the message for WhatsApp URL
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/256753979539?text=${encodedMessage}`, '_blank');
+        }
+    </script>
 </body>
-</html>
+    </html>
