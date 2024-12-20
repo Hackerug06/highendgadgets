@@ -7,6 +7,562 @@
     <link rel="icon" type="image/x-icon" href="/api/placeholder/32/32">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
     <style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechHub Laptops | Premium Laptop Store</title>
+    <link rel="icon" type="image/x-icon" href="/api/placeholder/32/32">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1d4ed8;
+            --accent-color: #4CAF50;
+            --danger-color: #ef4444;
+            --header-height: 70px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+        }
+
+        /* Header Styles */
+        .header {
+            background: #fff;
+            height: var(--header-height);
+            padding: 0 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+        }
+
+        /* Navigation Styles */
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .nav-toggle:hover {
+            color: var(--secondary-color);
+        }
+
+        .sidenav {
+            background: #fff;
+            height: calc(100vh - var(--header-height));
+            width: 250px;
+            position: fixed;
+            top: var(--header-height);
+            left: -250px;
+            padding-top: 20px;
+            transition: 0.3s ease-in-out;
+            z-index: 999;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+
+        .sidenav.active {
+            left: 0;
+        }
+
+        .sidenav a {
+            padding: 15px 25px;
+            text-decoration: none;
+            font-size: 16px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: 0.3s;
+        }
+
+        .sidenav a:hover {
+            background: #f0f9ff;
+            color: var(--primary-color);
+        }
+
+        .sidenav a i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .main {
+            margin-top: var(--header-height);
+            margin-left: 0;
+            padding: 20px;
+            min-height: calc(100vh - var(--header-height));
+            transition: 0.3s;
+            background: #f8fafc;
+        }
+
+        /* Product Grid */
+        .section-title {
+            font-size: 2rem;
+            color: #1f2937;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 1rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .product-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-description {
+            color: #6b7280;
+            margin-bottom: 1rem;
+            flex: 1;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .add-to-cart {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .add-to-cart:hover {
+            background: #43a047;
+            transform: scale(1.02);
+        }
+
+        /* Cart Styles */
+        .cart-container {
+            position: fixed;
+            top: calc(var(--header-height) + 20px);
+            right: 20px;
+            z-index: 1001;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .cart-button {
+            background: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+
+        .cart-button:hover {
+            background: var(--secondary-color);
+        }
+
+        .cart-count {
+            background: white;
+            color: var(--primary-color);
+            padding: 2px 6px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .cart-dropdown {
+            display: none;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            width: 350px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .cart-dropdown.active {
+            display: block;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #e5e7eb;
+            gap: 15px;
+        }
+
+        .cart-item img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 4px;
+        }
+
+        .cart-item-price {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        .remove-from-cart {
+            background: var(--danger-color);
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+        }
+
+        .remove-from-cart:hover {
+            background: #dc2626;
+        }
+
+        .cart-total {
+            padding: 15px;
+            border-top: 2px solid #e5e7eb;
+            font-weight: bold;
+            color: #1f2937;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-actions {
+            padding: 15px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .cart-actions button {
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .clear-cart {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        .clear-cart:hover {
+            background: #dc2626;
+        }
+
+        .checkout {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .checkout:hover {
+            background: #43a047;
+        }
+
+        .cart-empty {
+            padding: 30px;
+            text-align: center;
+            color: #6b7280;
+            font-size: 1.1rem;
+        }
+
+        /* WhatsApp Float Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25d366;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .whatsapp-float:hover {
+            background: #1ea952;
+            transform: scale(1.05);
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 30px 0;
+        }
+
+        .pagination button {
+            padding: 10px 20px;
+            border: none;
+            background: white;
+            color: var(--primary-color);
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .pagination button:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .pagination button.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Section Styles */
+        .section {
+            display: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .about-section, .contact-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .about-section h2, .contact-section h2 {
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+
+        .about-section p, .contact-section p {
+            color: #6b7280;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .contact-info {
+            display: grid;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #4b5563;
+        }
+
+        .contact-item i {
+            color: var(--primary-color);
+            width: 24px;
+        }
+
+        /* Overlay */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 998;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .header {
+                padding: 0 1rem;
+            }
+
+            .nav-toggle {
+                display: block;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 1rem;
+                padding: 0.5rem;
+            }
+
+            .cart-container {
+                right: 10px;
+            }
+
+            .cart-dropdown {
+                width: 300px;
+            }
+
+            .whatsapp-float {
+                bottom: 20px;
+                right: 20px;
+                padding: 12px 20px;
+            }
+
+            .section {
+                padding: 1rem;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .header {
+                padding: 0 0.5rem;
+            }
+
+            .product-card {
+                padding: 1rem;
+            }
+
+            .cart-dropdown {
+                width: calc(100vw - 20px);
+                right: -10px;
+            }
+
+            .section {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay" onclick="toggleNav()"></div>
+    
+    <header class="header">
+        <button class="nav-toggle" onclick="toggleNav()">
+            <i class="fas fa-bars"></i>
+        </button>
+        <a href="#" class="logo" onclick="showSection('products')">
+            <img src="/api/placeholder/40/40" alt="TechHub Logo">
+            TechHub Laptops
+        </a>
+    </header>
+
+    <nav class="sidenav">
+        <a href="#" onclick="showSection('products')">
+            <i class="fas fa-laptop"></i>
+            Products
+        </a>
+        <a href="#" onclick="showSection('about')">
+            <i class="fas fa-info-circle"></i>
+            About Us
+        </a></antArtifact>
         /* Previous styles remain the same */
 
         .nav-toggle {
@@ -192,152 +748,4 @@
                 });
                 document.getElementById(sectionId).classList.add('active');
                 
-                if (window.innerWidth <= 768 && isNavOpen) {
-                    toggleNav();
-                }
-            }
-
-            // Cart functions
-            function updateCart() {
-                cartCount.textContent = cart.length;
-                
-                if (cart.length === 0) {
-                    cartItems.innerHTML = '<div class="cart-empty">Your cart is empty</div>';
-                    cartTotal.innerHTML = 'Total: $0';
-                    return;
-                }
-
-                let total = 0;
-                cartItems.innerHTML = cart.map((item, index) => {
-                    total += item.price;
-                    return `
-                        <div class="cart-item">
-                            <img src="${item.image}" alt="${item.name}">
-                            <div class="cart-item-details">
-                                <div class="cart-item-name">${item.name}</div>
-                                <div class="cart-item-price">$${item.price}</div>
-                            </div>
-                            <button class="remove-from-cart" data-index="${index}">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    `;
-                }).join('');
-
-                cartTotal.innerHTML = `Total: $${total.toFixed(2)}`;
-
-                // Add event listeners to remove buttons
-                document.querySelectorAll('.remove-from-cart').forEach(button => {
-                    button.addEventListener('click', (e) => {
-                        const index = parseInt(e.currentTarget.dataset.index);
-                        removeFromCart(index);
-                    });
-                });
-            }
-
-            function addToCart(product) {
-                cart.push(product);
-                updateCart();
-            }
-
-            function removeFromCart(index) {
-                cart.splice(index, 1);
-                updateCart();
-            }
-
-            function clearCart() {
-                cart = [];
-                updateCart();
-            }
-
-            function checkout() {
-                if (cart.length === 0) {
-                    alert('Your cart is empty!');
-                    return;
-                }
-
-                const itemsList = cart.map(item => 
-                    `${item.name} - $${item.price}`
-                ).join('\n');
-                const total = cart.reduce((sum, item) => sum + item.price, 0);
-                
-                const message = `I would like to purchase the following items:\n\n${itemsList}\n\nTotal: $${total.toFixed(2)}`;
-                window.open(`https://wa.me/256753979539?text=${encodeURIComponent(message)}`, '_blank');
-                
-                clearCart();
-            }
-
-            // Display products function
-            function displayProducts() {
-                const productGrid = document.querySelector('.product-grid');
-                productGrid.innerHTML = products.map(product => `
-                    <div class="product-card">
-                        <img src="${product.image}" alt="${product.name}">
-                        <div class="product-info">
-                            <h3 class="product-name">${product.name}</h3>
-                            <p class="product-description">${product.description}</p>
-                            <div class="product-price">$${product.price}</div>
-                            <button class="add-to-cart" data-product-id="${product.id}">
-                                <i class="fas fa-shopping-cart"></i>
-                                Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                `).join('');
-
-                // Add event listeners to Add to Cart buttons
-                document.querySelectorAll('.add-to-cart').forEach(button => {
-                    button.addEventListener('click', (e) => {
-                        const productId = parseInt(e.currentTarget.dataset.productId);
-                        const product = products.find(p => p.id === productId);
-                        if (product) {
-                            addToCart(product);
-                        }
-                    });
-                });
-            }
-
-            // Event Listeners
-            navToggle.addEventListener('click', toggleNav);
-            
-            navLinks.forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const section = e.currentTarget.dataset.section;
-                    showSection(section);
-                });
-            });
-
-            cartButton.addEventListener('click', () => {
-                cartDropdown.classList.toggle('active');
-            });
-
-            clearCartButton.addEventListener('click', clearCart);
-            checkoutButton.addEventListener('click', checkout);
-
-            // Close cart when clicking outside
-            document.addEventListener('click', (e) => {
-                if (!cartButton.contains(e.target) && 
-                    !cartDropdown.contains(e.target) && 
-                    cartDropdown.classList.contains('active')) {
-                    cartDropdown.classList.remove('active');
-                }
-            });
-
-            // Close navigation when clicking outside
-            document.addEventListener('click', (e) => {
-                if (isNavOpen && 
-                    !sidenav.contains(e.target) && 
-                    !navToggle.contains(e.target)) {
-                    toggleNav();
-                }
-            });
-
-            // Initialize the page
-            displayProducts();
-            updateCart();
-            showSection('products');
-        });
-    </script>
-</body>
-                </html>
+                if (window.innerWidth <= 768 && isNavOpe
