@@ -81,19 +81,24 @@
 
         /* Enhanced Cart Styling */
         
-        .cart-float {
-            position: fixed;
+        
+        position: fixed;
             top: 80px;
             right: 20px;
             background: white;
             padding: 1rem;
-            border-radius: 8px;
+            border-radius: 50px;
+            text-decoration: none;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            max-width: 300px;
-            z-index: 999;
+            transition: transform 0.3s ease;
         }
-        
-
+.cart-float h3 {
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #f1f1f1;
+            font-size: 1rem;
+        }
         #cart-items {
             max-height: 200px;
             overflow-y: auto;
