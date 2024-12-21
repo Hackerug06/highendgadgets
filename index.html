@@ -264,13 +264,37 @@
             { id: 9, name: 'LG Gram', price: 1099, image: '/api/placeholder/300/200', description: '14-inch, Intel i7, 16GB RAM' },
             { id: 10, name: 'MSI Creator', price: 1599, image: '/api/placeholder/300/200', description: '16-inch, RTX 3060, 32GB RAM' }
         ];
+         let cart = [];
+        const itemsPerPage = 6;
 
-          // Helper function to format UGX prices
         function formatUGX(price) {
-            return `UGX ${price.toLocaleString('en-US')}`;
+            return price.toLocaleString('en-US');
         }
 
-        // Update the displayProducts function
+        document.querySelector('.hamburger').addEventListener('click', () => {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        document.querySelectorAll('.page-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const page = e.target.dataset.page;
+                showPage(page);
+            });
+        });
+
+        function showPage(page) {
+            document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+            if (page === 'about') {
+                document.getElementById('about-page').style.display = 'block';
+            } else if (page === 'contact') {
+                document.getElementById('contact-page').style.display = 'block';
+            } else {
+                document.getElementById('products-page').style.display = 'block';
+                displayProducts(parseInt(page));
+            }
+        }
+
         function displayProducts(page) {
             const start = (page - 1) * itemsPerPage;
             const end = start + itemsPerPage;
@@ -286,7 +310,7 @@
                     <img src="${product.image}" alt="${product.name}">
                     <h3>${product.name}</h3>
                     <p>${product.description}</p>
-                    <p>${formatUGX(product.price)}</p>
+                    <p style="font-size: 1.2rem; font-weight: bold; color: #2c3e50;">UGX ${formatUGX(product.price)}</p>
                     <button style="background: #4834d4; color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 25px; cursor: pointer; transition: background 0.3s ease;" 
                             onmouseover="this.style.background='#686de0'" 
                             onmouseout="this.style.background='#4834d4'"
@@ -297,7 +321,6 @@
                 productsContainer.appendChild(productCard);
             });
 
-            // Update pagination
             const totalPages = Math.ceil(products.length / itemsPerPage);
             const pagination = document.getElementById('pagination');
             pagination.innerHTML = '';
@@ -310,7 +333,17 @@
             }
         }
 
-        // Update the updateCart function
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            cart.push(product);
+            updateCart();
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCart();
+        }
+
         function updateCart() {
             const cartItems = document.getElementById('cart-items');
             const cartTotal = document.getElementById('cart-total');
@@ -321,7 +354,7 @@
                 const cartItem = document.createElement('div');
                 cartItem.innerHTML = `
                     <span style="color: #2c3e50; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 130px;">
-                        ${item.name} - ${formatUGX(item.price)}
+                        ${item.name} - UGX ${formatUGX(item.price)}
                     </span>
                     <button onclick="removeFromCart(${index})">×</button>
                 `;
@@ -329,10 +362,9 @@
                 total += item.price;
             });
 
-            cartTotal.textContent = formatUGX(total).replace('UGX ', '');
+            cartTotal.textContent = formatUGX(total);
         }
 
-        // Update the checkout function
         function checkout() {
             if (cart.length === 0) {
                 alert('Your cart is empty!');
@@ -341,14 +373,12 @@
 
             let message = 'I want to purchase:\n';
             cart.forEach(item => {
-                message += `${item.name} - ${formatUGX(item.price)}\n`;
+                message += `${item.name} - UGX ${formatUGX(item.price)}\n`;
             });
-            message += `\nTotal: ${formatUGX(cart.reduce((sum, item) => sum + item.price, 0))}`;
+            message += `\nTotal: UGX ${formatUGX(cart.reduce((sum, item) => sum + item.price, 0))}`;
 
             window.open(`https://wa.me/256753979539?text=${encodeURIComponent(message)}`);
         }
-
-[Rest of the code remains the same]
 
         // Initialize the first page
         displayProducts(1);
