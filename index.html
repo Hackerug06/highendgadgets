@@ -379,6 +379,90 @@
 
             window.open(`https://wa.me/256753979539?text=${encodeURIComponent(message)}`);
         }
+          // Helper function to format UGX prices
+        function formatUGX(price) {
+            return `UGX ${price.toLocaleString('en-US')}`;
+        }
+
+        // Update the displayProducts function
+        function displayProducts(page) {
+            const start = (page - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const productsToShow = products.slice(start, end);
+
+            const productsContainer = document.getElementById('products');
+            productsContainer.innerHTML = '';
+
+            productsToShow.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p>${product.description}</p>
+                    <p>${formatUGX(product.price)}</p>
+                    <button style="background: #4834d4; color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 25px; cursor: pointer; transition: background 0.3s ease;" 
+                            onmouseover="this.style.background='#686de0'" 
+                            onmouseout="this.style.background='#4834d4'"
+                            onclick="addToCart(${product.id})">
+                        Add to Cart
+                    </button>
+                `;
+                productsContainer.appendChild(productCard);
+            });
+
+            // Update pagination
+            const totalPages = Math.ceil(products.length / itemsPerPage);
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = '';
+            for (let i = 1; i <= totalPages; i++) {
+                const button = document.createElement('button');
+                button.textContent = i;
+                button.onclick = () => displayProducts(i);
+                if (i === page) button.style.backgroundColor = '#686de0';
+                pagination.appendChild(button);
+            }
+        }
+
+        // Update the updateCart function
+        function updateCart() {
+            const cartItems = document.getElementById('cart-items');
+            const cartTotal = document.getElementById('cart-total');
+            cartItems.innerHTML = '';
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                const cartItem = document.createElement('div');
+                cartItem.innerHTML = `
+                    <span style="color: #2c3e50; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 130px;">
+                        ${item.name} - ${formatUGX(item.price)}
+                    </span>
+                    <button onclick="removeFromCart(${index})">×</button>
+                `;
+                cartItems.appendChild(cartItem);
+                total += item.price;
+            });
+
+            cartTotal.textContent = formatUGX(total).replace('UGX ', '');
+        }
+
+        // Update the checkout function
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+
+            let message = 'I want to purchase:\n';
+            cart.forEach(item => {
+                message += `${item.name} - ${formatUGX(item.price)}\n`;
+            });
+            message += `\nTotal: ${formatUGX(cart.reduce((sum, item) => sum + item.price, 0))}`;
+
+            window.open(`https://wa.me/256753979539?text=${encodeURIComponent(message)}`);
+        }
+
+[Rest of the code remains the same]
 
         // Initialize the first page
         displayProducts(1);
